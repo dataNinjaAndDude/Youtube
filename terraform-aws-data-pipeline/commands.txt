@@ -1,0 +1,30 @@
+######### apply oncesi gerekenler
+
+# docker image build
+docker build --platform linux/arm64 -t s3-2-lambda-ecr-dev:latest .
+
+# aws account-id set etmece
+export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+
+# aws ecr ve docker login
+aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+
+# build ettigimiz image tag
+docker tag s3-2-lambda-ecr-dev:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/s3-2-lambda-ecr-dev:latest
+
+# image push
+docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/s3-2-lambda-ecr-dev:latest
+
+######### destroy icin gerekenler
+
+# s3 icindeki objeleri listeleme
+aws s3 ls s3://s3-2-lambda-s3-dev
+
+# s3 temizligi
+aws s3 rm s3://s3-2-lambda-s3-dev --recursive
+
+# ecr'da bulunan imagelari listeleme - imageDigest silmek icin gerekli
+aws ecr list-images --repository-name s3-2-lambda-ecr-dev --query 'imageIds[*]' --output json
+
+# image silme - imageDigest alani doldurulmali
+aws ecr batch-delete-image --repository-name s3-2-lambda-ecr-dev --image-ids imageDigest=""
