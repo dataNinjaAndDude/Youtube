@@ -24,7 +24,7 @@
 ### AWS ve Terraform Ile Data Pipeline
 
 <img src="images/youtube.png" width="50px"><br>
-[Terraform Ile AWS Ekosisteminde Basit Bir Pipeline](https://www.youtube.com/@DataNinjaAndDude)<br>
+[Terraform Ile AWS Ekosisteminde Basit Bir Pipeline](https://youtu.be/Ns7jjUUbo4M)<br>
 
 <img src="images/github.png" width="50px"><br>
 [Terraform Ile AWS Ekosisteminde Basit Bir Pipeline](https://github.com/dataNinjaAndDude/Youtube/tree/main/terraform-aws-data-pipeline)<br>
